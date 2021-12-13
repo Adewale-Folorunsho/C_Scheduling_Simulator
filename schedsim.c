@@ -5,10 +5,12 @@
 #include "process.h"
 #include "util.h"
 
-//Collaborated with Ibukun Esan and Chidindu Alim
 
 // Function to find the waiting time for all  
 // processes
+
+//collaborated with Ibukunoluwa Esan and Chidiindu Alim
+
 void findWaitingTimeRR(ProcessType plist[], int n,int quantum) 
 { 
   /*
@@ -27,7 +29,7 @@ void findWaitingTimeRR(ProcessType plist[], int n,int quantum)
    */
   
   int i;
-  int completedProcess = 0;
+  int processes_completed = 0;
   int *rem_bt = malloc(n * sizeof(int));
   for (i = 0;  i < n; ++i) {
      rem_bt[i] = plist[i].bt;
@@ -35,7 +37,7 @@ void findWaitingTimeRR(ProcessType plist[], int n,int quantum)
   }
   
   int t = 0;
-  while (completedProcess < n) {
+  while (processes_completed < n) {
     for (i = 0;  i < n; ++i) {
       if(rem_bt[i] != 0){
         if(rem_bt[i] > quantum){
@@ -45,7 +47,7 @@ void findWaitingTimeRR(ProcessType plist[], int n,int quantum)
           t += rem_bt[i];
           plist[i].wt = t - plist[i].bt;
           rem_bt[i] = 0;
-          ++completedProcess;
+          ++processes_completed;
         }
       }
     }
@@ -72,7 +74,7 @@ void findWaitingTimeSJF(ProcessType plist[], int n)
          - Calculate waiting time for each completed process. *wt[i]= Completion time - arrival_time-burst_time*
          - Increment time lap by one.
      */
-     int completedProcess = 0;
+     int processes_completed = 0;
      int time_lap = 0;
      int *completion_times = malloc(n * sizeof(int));
      int *process_times = malloc(n * sizeof(int));
@@ -83,7 +85,7 @@ void findWaitingTimeSJF(ProcessType plist[], int n)
        completion_times[i] = -1;
      }
   
-     while (completedProcess < n) {
+     while (processes_completed < n) {
        int proc_with_min_time = -1;
        int min_time = INT_MAX;
        for (i = 0; i < n; ++i) {
@@ -96,7 +98,7 @@ void findWaitingTimeSJF(ProcessType plist[], int n)
        
        process_times[proc_with_min_time] -= 1;
        if (process_times[proc_with_min_time] == 0) {
-         ++completedProcess;
+         ++processes_completed;
          completion_times[proc_with_min_time] = time_lap + 1;
        }
        ++time_lap;
